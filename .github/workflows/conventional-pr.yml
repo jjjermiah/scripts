@@ -16,7 +16,13 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
+      - name: Check PR title
+        uses: amannn/action-semantic-pull-request@v5.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create comment
+        if: failure()
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.pull_request.number }}
